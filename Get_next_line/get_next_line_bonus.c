@@ -41,7 +41,7 @@ static char	*save_ost(char *ost)
 
 int			get_next_line(int fd, char **line)
 {
-	static char *ost[1024];
+	static char *ost[1000000];
 	char		*buf;
 	int			nb;
 
@@ -54,7 +54,6 @@ int			get_next_line(int fd, char **line)
 		if ((nb = read(fd, buf, BUFFER_SIZE)) < 0)
 		{
 			free(buf);
-			free(ost[fd]);
 			return (-1);
 		}
 		buf[nb] = '\0';

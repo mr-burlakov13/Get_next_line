@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+
 static char	*save_ost(char *ost)
 {
 	char	*arr;
@@ -41,7 +41,7 @@ static char	*save_ost(char *ost)
 
 int			get_next_line(int fd, char **line)
 {
-	static char *ost[1024];
+	static char *ost[100000];
 	char		*buf;
 	int			nb;
 
@@ -54,7 +54,6 @@ int			get_next_line(int fd, char **line)
 		if ((nb = read(fd, buf, BUFFER_SIZE)) < 0)
 		{
 			free(buf);
-			free(ost[fd]);
 			return (-1);
 		}
 		buf[nb] = '\0';
@@ -66,21 +65,4 @@ int			get_next_line(int fd, char **line)
 	if (nb == 0)
 		return (0);
 	return (1);
-}
-
-#include <stdio.h>
-
-int main()
-{
-    char *line;
-    int fd;
-    int i = 0;
-    fd = open("tet", O_RDONLY);
-    while ((i = get_next_line (fd, &line)))
-    {
-    printf( "%d %s\n", i, line);
-        free(line);
-    }
-  printf( "%d %s\n", i, line);
- free(line);
 }
